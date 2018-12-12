@@ -1,0 +1,56 @@
+.transfer-container {
+  display: flex;
+  justify-content: space-between;
+  height: 350px;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+
+  .transfer-item {
+    width: calc(~"50% - 10px");
+
+    .transfer-search {
+      height: 30px;
+    }
+    .transfer-body {
+      margin-top: 10px;
+      padding-top: 5px;
+      height: calc(~"100% - 40px");
+      border: 1px solid #d9d9d9;
+
+      .select-all:hover {
+        color: #096dd9;
+      }
+      
+      .transfer-list {
+        height: calc(~"100% - 35px");
+        overflow-x: auto;
+        .transfer-record {
+          margin-left: 0;
+          padding: 5px;
+          display: block;
+          height: 30px;
+
+          .icon-add-s:before {
+            content: '';
+            color: #096dd9;
+          }
+          .icon-minus-s:before {
+            content: '';
+            color: #096dd9;
+          }
+        }
+        .transfer-record:hover {
+          background-color: #e0e6ff;
+        }
+        .transfer-record:hover .icon-add-s:before {
+          content: '\E693';
+        }
+        .transfer-record:hover .icon-minus-s:before {
+          content: '\E68F';
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import '../../theme.less';
+.status-box {
+    margin: 0;
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+        background: #000;
+        border-radius: 50%;
+        margin-right: 8px;
+        &.red {
+            background: @primary-red;
+        }
+        &.blue {
+            background: @primary-color;
+        }
+        &.grey {
+            background: @primary-grey;
+        }
+        &.orange {
+            background: @primary-orange;
+        }
+        &.green {
+            background: @primary-green;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.liquid-ball-container {
+
+  .flow-water {
+    animation:flow 3.7s linear infinite;
+  }
+  .mark-text {
+    position: absolute;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+  }
+  @keyframes flow
+  {
+    from {transform:translateX(-50%);}
+    to {transform:translateX(0);}
+  }
+}

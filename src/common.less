@@ -1,0 +1,268 @@
+@import "~antd/dist/antd.less";
+@import "theme.less";
+#app {
+    height: 100%;
+    overflow-x: auto;
+}
+
+ol,
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+:focus {
+    outline: 0;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Microsoft YaHei', 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: white;
+    height: 100%;
+    color: @text-body-color;
+}
+
+p {
+    margin: 0;
+}
+
+a,
+a:hover,
+a:focus {
+    outline: medium none;
+    text-decoration: none !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button,
+button:focus {
+    outline: none;
+}
+
+caption,
+th,
+td {
+    text-align: left;
+    font-weight: normal;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+}
+
+blockquote,
+q {
+    quotes: "" "";
+}
+
+.clearfix {
+    &::after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+}
+
+::-webkit-input-placeholder {
+    color: #ddd;
+}
+
+::-moz-placeholder {
+    color: #ddd;
+    opacity: 1;
+}
+
+:-moz-placeholder {
+    color: #ddd;
+}
+
+:-ms-input-placeholder {
+    color: #ddd;
+}
+
+.view {
+    background: #fff;
+    padding: 12px;
+}
+
+// 为了解决表格过滤项被遮挡问题。
+.ant-table-wrapper .ant-dropdown {
+    position: fixed;
+}
+
+// 对ant-table的样式改造
+.ant-table-placeholder {
+    display: none;
+}
+
+.ant-table-thead {
+    font-size: 14px;
+}
+
+.ant-pagination {
+    text-align: right;
+    padding-top: 15px;
+    font-size: 12px;
+    border-top: 1px solid #e8e8e8;
+    margin-top: -1px;
+    .ant-pagination-total-text,
+    .ant-pagination-options {
+        float: left;
+        margin-left: 0;
+    }
+}
+
+.ant-table-thead>tr>th .anticon-filter,
+.ant-table-thead>tr>th .ant-table-filter-icon {
+    top: -3px;
+}
+
+//改造菜单
+.ant-menu-horizontal > .ant-menu-item > a:hover{
+    text-decoration: none;
+}
+// .ant-menu-item.ant-menu-item-selected:after {
+//     border-right: none;
+// }
+
+// .ant-menu-item,
+// .ant-menu-submenu-title {
+//     font-size: 14px !important;
+// }
+
+// .ant-menu-light .ant-menu-sub .ant-menu-item {
+//     color: rgba(0, 0, 0, .45);
+// }
+
+//改造tab
+.hy-reset-tab {
+    .ant-tabs-nav-wrap {
+        background-color: #FCFCFC; //margin-bottom: 0px;
+        //border-bottom: 1px solid #F2F2F2;
+        .ant-tabs-nav {
+            //border-bottom: 1px solid red;
+            //margin-bottom: 1px;
+        }
+    }
+    .ant-tabs-tab-active {
+        border-left: 1px solid #F2F2F2;
+        border-right: 1px solid #F2F2F2;
+        background-color: #FFF;
+        font-weight: 600; //position: relative;
+        //&:before{
+        //  bottom: 0;
+        //  content: '';
+        //  height: 1px ;
+        //  width: 100%;
+        //  background-color: #FFF;
+        //  position: absolute;
+        //  left: 0;
+        //  right: 0;
+        //}
+    }
+    .ant-tabs-ink-bar {
+        bottom: 0;
+        top: 1px;
+    }
+}
+
+//对ant table做样式处理
+.ant-table {
+    .ant-table-content {
+        .ant-table-body {
+            table {
+                tr {
+                    &:nth-child(2n+1) {
+                        background-color: #F6F8FA;
+                    }
+                    td {
+                        padding: 10px;
+                        border-bottom: 0;
+                    }
+                    th {
+                        color: #BDBDBD;
+                        background-color: #fff;
+                        border-top: 1px solid #E0E0E0;
+                        border-bottom: 2px solid #E0E0E0;
+                        padding: 16px 10px;
+                    }
+                }
+                thead tr th{
+                    color: #333;
+                }
+            }
+        }
+        // table-td-tilter
+        .ant-table-column-has-filters {
+            >div {
+                display: inline-block;
+            }
+            .anticon-filter {
+                position: static;
+                line-height: 1;
+                margin-left: 8px;
+                >svg {
+                    position: static;
+                }
+            }
+        }
+    }
+}
+
+.ant-layout-content.full-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+}
+
+.color-white {
+    color: #fff;
+}
+
+.color-grey {
+    color: #7F7F7F;
+}
+
+.bg-black {
+    background-color: #2B3031;
+}
+
+.text-ellipsis {
+    max-width: 120px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+// input-search
+.ant-input-search {
+    .ant-input-search-button {
+        background: #fff;
+        padding: 0 8px;
+        .anticon {
+            color: #2196f3;
+        }
+    }
+}

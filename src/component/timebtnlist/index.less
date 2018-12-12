@@ -1,0 +1,23 @@
+.time-btn-list-container {
+  display: inline-flex;
+  margin-left: 10px;
+
+  .time-btn-normal {
+    width: 80px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    background: #fbfbfb;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    border-left: none;
+  }
+  .time-btn-normal.active {
+    border-top: 2px solid #1890ff;
+    color: #1890ff;
+    background: #fff;
+  }
+  .time-btn-normal:first-child {
+    border-left: 1px solid #e8e8e8;
+  }
+}
