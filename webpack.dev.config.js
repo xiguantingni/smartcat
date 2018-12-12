@@ -44,11 +44,11 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['es2015', 'stage-0', 'react']
+                        presets: ['es2015', 'stage-0', 'react'],
                         //按需导入样式文件
-                        //plugins: [
-                        //    ['import', { libraryName: 'antd', style: 'css' }]
-                        //]
+                        plugins: [
+                            ['import', { libraryName: 'antd', style: true}]
+                        ]
                     }
                 },
                 exclude: /node_modules/
