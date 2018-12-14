@@ -1,0 +1,40 @@
+.main-container {
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title-item {
+      width: 100px;
+      font-size: 20px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .title-item.active {
+      color: red;
+    }
+  }
+
+  .body {
+
+    .list-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 5px;
+
+      .film-item {
+        padding-bottom: 10px;
+
+        .film-item-picture {
+          height: 250px;
+        }
+        .film-item-remark {
+          text-align: center;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+}

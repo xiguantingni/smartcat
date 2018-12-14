@@ -12,6 +12,17 @@ export const findInArray = (arr, item) => {
     return -1;
 };
 
+export const getDeviceType = () => {
+    let _type;
+    if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+        _type = 'mobile';
+    }
+    else {
+        _type = 'pc';
+    }
+    return _type;
+};
+
 export const getBrowser = () => {
     let Sys = {};
     const ua = navigator.userAgent.toLowerCase();

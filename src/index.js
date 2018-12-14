@@ -15,9 +15,11 @@ import { getCookie } from '@util/cookie';
 import history from '@util/history';
 import './common.less';
 
-// 页面组件
-import DeploySuccess from '@page/deploysuccess/view';
-import DeployFail from '@page/deployfail/view';
+// 一级页面组件
+import Main from '@page/main/view';
+import Type from '@page/type/view';
+import Detail from '@page/detail/view';
+import Description from '@page/description/view';
 import Page404 from '@page/page404/view';
 
 let store = createStore(reducers);
@@ -28,8 +30,10 @@ ReactDom.render(
         <LocaleProvider locale={zhCN}>
             <Router history={history}>
                 <Switch>
-                    <Route key="deploy-success" path="/deploy-success" component={DeploySuccess} />
-                    <Route key="deploy-fail" path="/deploy-fail" component={DeployFail} />
+                    <Route key="main" path="/main" component={Main} />
+                    <Route key="type" path="/type" component={Type} />
+                    <Route key="detail" path="/detail" component={Detail} />
+                    <Route key="description" path="/description" component={Description} />
                     <Route key="pagenotfound" path="/pagenotfound" component={Page404} />
                     <Redirect to="/pagenotfound" />
                 </Switch>
