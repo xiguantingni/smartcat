@@ -20,6 +20,7 @@ import Main from '@page/main/view';
 import Type from '@page/type/view';
 import Detail from '@page/detail/view';
 import Description from '@page/description/view';
+import FilmPlay from '@page/filmplay/view';
 import Page404 from '@page/page404/view';
 
 let store = createStore(reducers);
@@ -30,12 +31,13 @@ ReactDom.render(
         <LocaleProvider locale={zhCN}>
             <Router history={history}>
                 <Switch>
-                    <Route key="main" path="/main" component={Main} />
-                    <Route key="type" path="/type" component={Type} />
-                    <Route key="detail" path="/detail" component={Detail} />
-                    <Route key="description" path="/description" component={Description} />
-                    <Route key="pagenotfound" path="/pagenotfound" component={Page404} />
-                    <Redirect to="/pagenotfound" />
+                    <Route key="main" path="/page/main" component={Main} />
+                    <Route key="type" path="/page/type" component={Type} />
+                    <Route key="detail" path="/page/detail" component={Detail} />
+                    <Route key="description" path="/page/description" component={Description} />
+                    <Route key="filmplay" path="/page/filmplay" component={FilmPlay} />
+                    <Route key="pagenotfound" path="/page/pagenotfound" component={Page404} />
+                    <Redirect to="/page/pagenotfound" />
                 </Switch>
             </Router>
         </LocaleProvider>
