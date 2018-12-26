@@ -3,11 +3,11 @@
  * 搜集所有的reducer
  */
 
-import Detail from '@page/detail/model';
+//import Detail from '@page/detail/model';
 import { combineReducers } from 'redux';
 
 const allReducers = [
-    Detail
+  //  Detail
 ].reduce((p, c) => {
     p[c.namespace] = c.reducer;
     return p
