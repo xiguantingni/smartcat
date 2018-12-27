@@ -6,9 +6,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const TARGET = process.env.npm_lifecycle_event;
-const url = TARGET === 'testser' ? 'http://172.16.29.121:51381' : 'http://172.16.29.121:51381';
-
 module.exports = {
     entry: ['babel-polyfill', './src/index.js'],
     output: {
@@ -115,8 +112,8 @@ module.exports = {
         historyApiFallback: true,
         stats: "errors-only",
         proxy: {
-            '/deployapi': {
-                target: url,
+            '/api': {
+                target: 'http://localhost:8081',
                 secure: false,
                 changeOrigin: true
             }

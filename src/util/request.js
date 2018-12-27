@@ -42,7 +42,7 @@ export const request = (url, options = {}) => {
     options.credentials = 'include';
     // method处理
     if (!options.method) {
-        options.method = 'POST'; // 海河默认
+        options.method = 'GET';
     }
     // body 处理
     if (options.body) {
@@ -56,7 +56,7 @@ export const request = (url, options = {}) => {
     // 通知request
     context.dispatch({ type: `${options.type}_${constant.request}`, payload: options });
 
-    return fetch(`/deployapi${url}`, options)
+    return fetch(`/api${url}`, options)
         .then((res) => {
             if (res.status >= 0 && res.status <= 599) {
                 return res;

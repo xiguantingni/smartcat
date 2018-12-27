@@ -3,13 +3,31 @@
   max-width: 800px;
   margin: 0 auto;
 
-  .list-title {
+  .list-film-body {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .film-item {
+      width: 220px;
+      padding-bottom: 10px;
+
+      .film-item-picture {
+        width: 100%;
+      }
+      .film-item-name {
+        text-align: center;
+      }
+    }
+  }
+
+  .list-film-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .list-foot {
+  .list-film-foot {
     display: flex;
     justify-content: space-between;
     align-items: center;

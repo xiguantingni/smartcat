@@ -5,6 +5,7 @@
 import React from 'react';
 import { Button, Icon } from 'antd';
 import { parseUrlParams, getDeviceType } from '@util';
+import { dispatch } from '@util/dispatch';
 import './index.less';
 
 class List extends React.Component {
@@ -29,6 +30,18 @@ class List extends React.Component {
             ]
         };
         this.isPc = getDeviceType();
+    }
+
+    componentDidMount() {
+        dispatch({
+            type: 'getlist',
+            payload: {
+                url: '/list',
+                successCallback: (response) => {
+                    console.log(response);
+                }
+            }
+        });
     }
 
     handleTitleClick(type) {
@@ -85,6 +98,22 @@ class List extends React.Component {
         }
     }
 
+    renderListFilmFoot() {
+        return (
+            <div className="list-film-foot">
+                <div>
+                    <Button style={{marginRight: 20}} onClick={this.handlePageChange.bind(this, 'start')}>首页</Button>
+                    <Button onClick={this.handlePageChange.bind(this, 'pre')}><Icon type="arrow-left" />上一页</Button>
+                </div>
+                <div>正在展示5/14页</div>
+                <div>
+                    <Button style={{marginRight: 20}} onClick={this.handlePageChange.bind(this, 'next')}><Icon type="arrow-right" />上一页</Button>
+                    <Button onClick={this.handlePageChange.bind(this, 'end')}>尾页</Button>
+                </div>
+            </div>
+        )
+    }
+
     render() {
         const { type, rows } = this.state;
         console.log(this.state);
@@ -95,18 +124,8 @@ class List extends React.Component {
                     <div onClick={this.handleTitleClick.bind(this, 'software')} className={type === 'software' ? 'item active' : 'item'}>软件</div>
                     <div onClick={this.handleTitleClick.bind(this, 'article')} className={type === 'article' ? 'item active' : 'item'}>好文</div>
                 </div>
-                <div className="list-body">{rows.map(item => this.renderItem(item))}</div>
-                <div className="list-foot">
-                    <div>
-                        <Button style={{marginRight: 20}} onClick={this.handlePageChange.bind(this, 'start')}>首页</Button>
-                        <Button onClick={this.handlePageChange.bind(this, 'pre')}><Icon type="arrow-left" />上一页</Button>
-                    </div>
-                    <div>正在展示5/14页</div>
-                    <div>
-                        <Button style={{marginRight: 20}} onClick={this.handlePageChange.bind(this, 'next')}><Icon type="arrow-right" />上一页</Button>
-                        <Button onClick={this.handlePageChange.bind(this, 'end')}>尾页</Button>
-                    </div>
-                </div>
+                { type === 'film' ? <div className="list-film-body">{rows.map(item => this.renderItem(item))}</div> : null }
+                { type === 'film' ? this.renderListFilmFoot() : null }
             </div>
         )
     }
