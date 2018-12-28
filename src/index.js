@@ -22,6 +22,10 @@ import Main from '@page/main/view';
 import Type from '@page/type/view';
 import Description from '@page/description/view';
 import FilmPlay from '@page/filmplay/view';
+
+// 以下是管理页面
+import AdminFilm from '@page/admin/film/view';
+
 import Page404 from '@page/page404/view';
 
 let store = createStore(reducers);
@@ -39,6 +43,9 @@ ReactDom.render(
                     <Route key="description" path="/page/description" component={Description} />
                     <Route key="filmplay" path="/page/filmplay" component={FilmPlay} />
                     <Route key="pagenotfound" path="/page/pagenotfound" component={Page404} />
+
+                    <Route key="admin-film" path="/page/admin/film" component={AdminFilm} />
+
                     <Redirect to="/page/pagenotfound" />
                 </Switch>
             </Router>
