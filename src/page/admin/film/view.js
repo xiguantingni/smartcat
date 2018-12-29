@@ -5,7 +5,8 @@
 import React from 'react';
 import Table from '@component/table';
 import Modal from '@component/rcmodal';
-import { Button, Drawer } from 'antd';
+import { Button } from 'antd';
+import CreateDrawer from './create';
 import './index.less';
 
 class AdminFilm extends React.Component  {
@@ -15,6 +16,7 @@ class AdminFilm extends React.Component  {
         this.state = {
             showOperation: false,
             showDeleteAlert: false,
+            currentRow: null,
             isFetch: false,
             rows: [
                 {
@@ -48,12 +50,12 @@ class AdminFilm extends React.Component  {
 
     handleCreateClick() {
         // 创建
-        this.setState({showOperation: true});
+        this.setState({showOperation: true, currentRow: null});
     }
 
     handleEditClick(row) {
         // 编辑
-        this.setState({showOperation: true});
+        this.setState({showOperation: true, currentRow: row});
     }
 
     handleDeleteClick() {
@@ -98,7 +100,7 @@ class AdminFilm extends React.Component  {
     }
 
     render() {
-        const { rows, isFetch, selectRows, showOperation, showDeleteAlert } = this.state;
+        const { rows, isFetch, selectRows, showOperation, showDeleteAlert, currentRow } = this.state;
         return (
             <div className="view admin-film-container">
                 <div className="title">这是对电影资源的管理页面</div>
@@ -138,17 +140,11 @@ class AdminFilm extends React.Component  {
                     onOk={this.handleOkDeleteClick.bind(this)}
                     onCancel={this.handleCancelDeleteClick.bind(this)}
                 />
-                <Drawer
-                    className="operation"
+                <CreateDrawer
+                    currentRow={currentRow}
                     onClose={this.handleHideOperation.bind(this)}
-                    maskClosable
-                    mask
-                    width={500}
-                    title="创建/编辑"
                     visible={showOperation}
-                >
-
-                </Drawer>
+                />
             </div>
         );
     }
