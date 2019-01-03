@@ -1,21 +1,26 @@
 /**
- * Created by RCC on 2018/12/28.
+ * Created by RCC on 2019/1/2.
  */
 
 import React from 'react';
 import Table from '@component/table';
 import Modal from '@component/rcmodal';
-import { Button } from 'antd';
-import CreateDrawer from './create';
+import request from '@util/request';
+import { Button, Radio, Form } from 'antd';
+import FormBody from './formbody';
 import './index.less';
 
-class AdminFilm extends React.Component  {
+const FormItem = Form.Item;
+
+class Admin extends React.Component  {
 
     constructor(props) {
         super(props);
         this.state = {
-            showOperation: false,
+            type: 'film',
             showDeleteAlert: false,
+            showOperateAlert: false,
+            showOperateLoading: false, // 确定中
             currentRow: null,
             isFetch: false,
             rows: [
@@ -48,31 +53,9 @@ class AdminFilm extends React.Component  {
         }
     }
 
-    handleCreateClick() {
-        // 创建
-        this.setState({showOperation: true, currentRow: null});
-    }
-
-    handleEditClick(row) {
-        // 编辑
-        this.setState({showOperation: true, currentRow: row});
-    }
-
-    handleDeleteClick() {
-        // 删除
-        this.setState({showDeleteAlert: true});
-    }
-
-    handleOkDeleteClick() {
-        this.setState({showDeleteAlert: false});
-    }
-
-    handleCancelDeleteClick() {
-        this.setState({showDeleteAlert: false});
-    }
-
-    handleHideOperation() {
-        this.setState({showOperation: false});
+    handleTypeChange(e) {
+        this.setState({type: e.target.value});
+        // 此处开始请求对应资源
     }
 
     getColumns() {
@@ -87,7 +70,7 @@ class AdminFilm extends React.Component  {
             { title: "关键词", dataIndex: "keywords", key: "keywords" },
             { title: "利润", dataIndex: "profit", key: "profit" },
             { title: "创建时间", dataIndex: "create", key: "create" },
-            { title: '操作', key: 'operation',  render: (value, row) => <Button type="primary" size="small" onClick={this.handleEditClick.bind(this, row)}>编辑</Button> }
+            { title: '操作', key: 'operation',  render: (value, row) => <Button type="primary" size="small" onClick={this.handleEditOperationClick.bind(this, row)}>编辑</Button> }
         ]
     }
 
@@ -99,23 +82,75 @@ class AdminFilm extends React.Component  {
         }
     }
 
+
+    // 操作管理弹框---start
+
+    getOperateTitle() {
+        const { type, currentRow } = this.state;
+        if (type === 'film') {
+            return currentRow ? '编辑电影' : '创建电影';
+        } else if (type === 'software') {
+            return currentRow ? '编辑软件' : '创建软件';
+        } else if (type === 'article') {
+            return currentRow ? '编辑好文' : '创建好文';
+        } else {
+            return '未知';
+        }
+    }
+
+    handleCreateOperateClick() {
+        this.setState({showOperateAlert: true, currentRow: null});
+    }
+
+    handleEditOperationClick(row) {
+        this.setState({showOperateAlert: true, currentRow: row});
+    }
+
+    handleOkOperateClick() {
+        this.formBody.props.form.validateFields(errors => {
+            if (!errors) {
+                this.setState({ showOperateLoading: true });
+                // 开始于后端交互
+                request('/api/createOrEdit', {
+                    successCallback: () => { this.setState({ showOperateLoading: false, showOperateAlert: false })},
+                    failCallback: () => { this.setState({ showOperateLoading: false, showOperateAlert: false })}
+                });
+            }
+        });
+    }
+
+    handleCancelOperateClick() {
+        this.setState({ showOperateAlert: false });
+    }
+
+    // 操作管理弹框---end
+
+
     render() {
-        const { rows, isFetch, selectRows, showOperation, showDeleteAlert, currentRow } = this.state;
+        const { type, rows, isFetch, selectRows, showDeleteAlert, currentRow, showOperateAlert, showOperateLoading } = this.state;
         return (
             <div className="view admin-film-container">
-                <div className="title">这是对电影资源的管理页面</div>
+                <span className="title">管理类型：</span>
+                <Radio.Group
+                    value={type}
+                    buttonStyle="solid"
+                    onChange={this.handleTypeChange.bind(this)}>
+                    <Radio.Button value="film">电影</Radio.Button>
+                    <Radio.Button value="software">软件</Radio.Button>
+                    <Radio.Button value="article">好文</Radio.Button>
+                </Radio.Group>
+                <div style={{borderTop: '1px solid #E0E0E0', margin: '10px 0'}}></div>
                 <div className="body">
                     <div className="button-list">
                         <Button
                             type="primary"
                             style={{marginRight: 16}}
-                            onClick={this.handleCreateClick.bind(this)}
+                            onClick={this.handleCreateOperateClick.bind(this)}
                         >
                             创建
                         </Button>
                         <Button
                             type="danger"
-                            onClick={this.handleDeleteClick.bind(this)}
                             disabled={selectRows.length <= 0}
                         >
                             删除
@@ -137,18 +172,26 @@ class AdminFilm extends React.Component  {
                     customData={{promptText: "确定要删除选中的资源？"}}
                     cancelText="取消"
                     visible={showDeleteAlert}
-                    onOk={this.handleOkDeleteClick.bind(this)}
-                    onCancel={this.handleCancelDeleteClick.bind(this)}
                 />
-                <CreateDrawer
-                    currentRow={currentRow}
-                    onClose={this.handleHideOperation.bind(this)}
-                    visible={showOperation}
-                />
+                <Modal
+                    title={this.getOperateTitle()}
+                    okText="确定"
+                    cancelText="取消"
+                    visible={showOperateAlert}
+                    confirmLoading={showOperateLoading}
+                    onOk={this.handleOkOperateClick.bind(this)}
+                    onCancel={this.handleCancelOperateClick.bind(this)}
+                >
+                    <FormBody
+                        wrappedComponentRef={c => this.formBody = c}
+                        currentRow={currentRow}
+                        type={type}
+                    />
+                </Modal>
             </div>
         );
     }
 
 }
 
-export default AdminFilm;
+export default Admin;

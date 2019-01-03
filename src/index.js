@@ -4,10 +4,7 @@
 
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import context from '@src/context';
-import reducers from '@src/reducers';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
@@ -24,32 +21,27 @@ import Description from '@page/description/view';
 import FilmPlay from '@page/filmplay/view';
 
 // 以下是管理页面
-import AdminFilm from '@page/admin/film/view';
+import Admin from '@page/admin/view';
 
 import Page404 from '@page/page404/view';
 
-let store = createStore(reducers);
-context.dispatch = store.dispatch;
-
 ReactDom.render(
-    <Provider store={store}>
-        <LocaleProvider locale={zhCN}>
-            <Router history={history}>
-                <Switch>
-                    <Route key="index" path="/page/index" component={Index} />
-                    <Route key="list" path="/page/list" component={List} />
-                    <Route key="main" path="/page/main" component={Main} />
-                    <Route key="type" path="/page/type" component={Type} />
-                    <Route key="description" path="/page/description" component={Description} />
-                    <Route key="filmplay" path="/page/filmplay" component={FilmPlay} />
-                    <Route key="pagenotfound" path="/page/pagenotfound" component={Page404} />
+    <LocaleProvider locale={zhCN}>
+        <Router history={history}>
+            <Switch>
+                <Route key="index" path="/page/index" component={Index} />
+                <Route key="list" path="/page/list" component={List} />
+                <Route key="main" path="/page/main" component={Main} />
+                <Route key="type" path="/page/type" component={Type} />
+                <Route key="description" path="/page/description" component={Description} />
+                <Route key="filmplay" path="/page/filmplay" component={FilmPlay} />
+                <Route key="pagenotfound" path="/page/pagenotfound" component={Page404} />
 
-                    <Route key="admin-film" path="/page/admin/film" component={AdminFilm} />
+                <Route key="admin-film" path="/page/admin/film" component={Admin} />
 
-                    <Redirect to="/page/pagenotfound" />
-                </Switch>
-            </Router>
-        </LocaleProvider>
-    </Provider>,
+                <Redirect to="/page/pagenotfound" />
+            </Switch>
+        </Router>
+    </LocaleProvider>,
     document.getElementById('app')
 );

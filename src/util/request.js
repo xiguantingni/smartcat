@@ -14,11 +14,7 @@
  */
 
 import fetch from 'isomorphic-fetch';
-import context from '@src/context';
-import constant from '@src/constant';
-import { getCookie } from '@util/cookie';
 import notification from '@component/notification';
-import correctPage from '@util/correctpage';
 
 export const request = (url, options = {}) => {
     // 1,url处理
@@ -36,8 +32,7 @@ export const request = (url, options = {}) => {
     // headers处理
     options.headers = {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${getCookie('token')}`
+        'Content-Type': 'application/json'
     };
     options.credentials = 'include';
     // method处理
@@ -48,64 +43,37 @@ export const request = (url, options = {}) => {
     if (options.body) {
         options.body = JSON.stringify(options.body);
     }
-    // 页面状态检查
-    if (options.pageStatusCheck) {
-        correctPage();
-    }
-
-    // 通知request
-    context.dispatch({ type: `${options.type}_${constant.request}`, payload: options });
 
     return fetch(`/api${url}`, options)
         .then((res) => {
-            if (res.status >= 0 && res.status <= 599) {
+            if (res.status >= 200 && res.status < 300) {
                 return res;
-            } else {
-                throw new Error('异常').response = res;
             }
+            const error = new Error(res.statusText);
+            error.response = res;
+            throw error;
         })
         .then((res) => {
-            return res.json().then(resp => {
-                return {
-                    status: res.status,
-                    response: resp
-                }
-            })
+            return res.json();
         })
         .then(res => {
-            const { response, status } = res;
-            // 成功获取后台数据
-            if (status >= 200 && status < 300) {
-                // 成功通知
-                context.dispatch({ type: `${options.type}_${constant.success}`, payload: { ...options, response } });
+            if (res && res.code == 0) {
                 // 成功回调
-                options.successCallback && options.successCallback(response);
+                options.successCallback && options.successCallback(res);
             } else {
-                if (status === 401) {
-                    notification('info', { description: '登录超时，请重新登录。' });
-                    context.dispatch({
-                        type: 'login/logout'
-                    })
-                } else {
-                    // 失败通知
-                    context.dispatch({ type: `${options.type}_${constant.fail}`, payload: { ...options, response } });
-                    // 失败回调
-                    options.failCallback && options.failCallback(response);
-                    // 失败提示
-                    notification('error', { description: response.errorMessage || '操作失败' });
-                }
+                // 失败回调
+                options.failCallback && options.failCallback(res);
+                // 失败提示
+                notification('error', { description: res.errorMessage || '操作失败' });
             }
-            return response;
+            return res;
         })
         .catch(error => {
             // 网络连接错误，或者前端语法错误
             console.log(error);
             // 失败回调
             options.failCallback && options.failCallback(error);
-            // 失败通知
-            context.dispatch({ type: `${options.type}_${constant.fail}`, payload: { ...options, error } });
             // 失败提示
             notification('error', { description: '操作失败' });
         });
-
 };
